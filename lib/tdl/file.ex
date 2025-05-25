@@ -18,7 +18,8 @@ defmodule Tdl.File do
   end
 
   @impl true
-  def handle_call({:update, new_text}, from, _old_text) do
+  def handle_call({:update, new_text}, from, old_text) do
+    IO.inspect("Before updating: old_text = " <> old_text)
     IO.inspect("Update received from #{inspect(from)}: new_text = " <> new_text)
     {:reply, :ok, new_text}
   end
