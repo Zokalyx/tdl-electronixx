@@ -1,4 +1,4 @@
-defmodule MyappWeb.ErrorJSON do
+defmodule TdlWeb.ErrorJSON do
   @moduledoc """
   This module is invoked by your endpoint in case of errors on JSON requests.
 

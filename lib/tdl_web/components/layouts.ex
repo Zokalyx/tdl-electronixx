@@ -1,4 +1,4 @@
-defmodule MyappWeb.Layouts do
+defmodule TdlWeb.Layouts do
   @moduledoc """
   This module holds different layouts used by your application.
 
@@ -7,7 +7,7 @@ defmodule MyappWeb.Layouts do
   application router. The "app" layout is rendered as component
   in regular views and live views.
   """
-  use MyappWeb, :html
+  use TdlWeb, :html
 
   embed_templates "layouts/*"
 

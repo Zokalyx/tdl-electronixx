@@ -1,6 +1,6 @@
-defmodule Myapp do
+defmodule Tdl do
   @moduledoc """
-  Myapp keeps the contexts that define your domain
+  Tdl keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

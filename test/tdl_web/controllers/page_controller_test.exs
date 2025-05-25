@@ -1,5 +1,5 @@
-defmodule MyappWeb.PageControllerTest do
-  use MyappWeb.ConnCase
+defmodule TdlWeb.PageControllerTest do
+  use TdlWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
