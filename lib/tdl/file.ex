@@ -1,8 +1,7 @@
 defmodule Tdl.File do
   use GenServer
 
-  ## Missing Client API - will add this later
-
+  ## Client API
   def start_link(opts) do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
@@ -19,8 +18,8 @@ defmodule Tdl.File do
   end
 
   @impl true
-  def handle_call({:update, new_text}, _from, _old_text) do
-    IO.inspect("Update received: new_text = " <> new_text)
+  def handle_call({:update, new_text}, from, _old_text) do
+    IO.inspect("Update received from #{inspect(from)}: new_text = " <> new_text)
     {:reply, :ok, new_text}
   end
 end
