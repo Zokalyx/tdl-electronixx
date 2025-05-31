@@ -1,4 +1,5 @@
 import Config
+import Dotenvy
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
@@ -100,3 +101,21 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
+
+
+env_dir_prefix = System.get_env("RELEASE_ROOT") || Path.expand("./envs")
+IO.inspect(env_dir_prefix)
+source!([
+  Path.absname(".env", env_dir_prefix),
+  Path.absname("#{config_env()}.env", env_dir_prefix),
+  System.get_env()
+  ])
+
+config :tdl, Tdl.Repo,
+  database: env!("DB_NAME",:string),
+  username: env!("DB_USERNAME",:string),
+  password: env!("DB_PASSWORD",:string),
+  hostname: env!("DB_HOST", :string),
+  port: env!("DB_PORT", :integer),
+  pool_size: 10,
+  show_sensitive_data_on_connection_error: true

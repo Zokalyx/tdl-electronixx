@@ -7,13 +7,6 @@
 # General application configuration
 import Config
 
-config :tdl, Tdl.Repo,
-  database: "tdl_repo",
-  username: "",
-  password: "",
-  hostname: "",
-  port: 
-
 config :tdl,
   generators: [timestamp_type: :utc_datetime]
 
