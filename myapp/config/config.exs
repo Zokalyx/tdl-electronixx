@@ -7,26 +7,20 @@
 # General application configuration
 import Config
 
-config :tdl, Tdl.Repo,
-  database: "tdl_repo",
-  username: "",
-  password: "",
-  hostname: "",
-  port: 
-
-config :tdl,
+config :myapp,
+  ecto_repos: [Myapp.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :tdl, TdlWeb.Endpoint,
+config :myapp, MyappWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: TdlWeb.ErrorHTML, json: TdlWeb.ErrorJSON],
+    formats: [html: MyappWeb.ErrorHTML, json: MyappWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Tdl.PubSub,
-  live_view: [signing_salt: "Xqzi081u"]
+  pubsub_server: Myapp.PubSub,
+  live_view: [signing_salt: "Au8q47NH"]
 
 # Configures the mailer
 #
@@ -35,12 +29,12 @@ config :tdl, TdlWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :tdl, Tdl.Mailer, adapter: Swoosh.Adapters.Local
+config :myapp, Myapp.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  tdl: [
+  myapp: [
     args:
       ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
@@ -50,7 +44,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "4.0.9",
-  tdl: [
+  myapp: [
     args: ~w(
       --input=assets/css/app.css
       --output=priv/static/assets/css/app.css
@@ -69,6 +63,3 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
-
-config :tdl,
-  ecto_repos: [Tdl.Repo]

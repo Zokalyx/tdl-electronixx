@@ -1,4 +1,4 @@
-defmodule Tdl.Application do
+defmodule Hello.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,20 +8,19 @@ defmodule Tdl.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Tdl.File, name: Tdl.File},
-      TdlWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:tdl, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Tdl.PubSub},
-      # Start a worker by calling: Tdl.Worker.start_link(arg)
-      # {Tdl.Worker, arg},
+      HelloWeb.Telemetry,
+      Hello.Repo,
+      {DNSCluster, query: Application.get_env(:hello, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: Hello.PubSub},
+      # Start a worker by calling: Hello.Worker.start_link(arg)
+      # {Hello.Worker, arg},
       # Start to serve requests, typically the last entry
-      TdlWeb.Endpoint,
-      Tdl.Repo
+      HelloWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Tdl.Supervisor]
+    opts = [strategy: :one_for_one, name: Hello.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -29,7 +28,7 @@ defmodule Tdl.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    TdlWeb.Endpoint.config_change(changed, removed)
+    HelloWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

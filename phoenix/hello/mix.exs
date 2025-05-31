@@ -1,9 +1,9 @@
-defmodule Tdl.MixProject do
+defmodule Hello.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :tdl,
+      app: :hello,
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Tdl.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Tdl.Application, []},
+      mod: {Hello.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -34,6 +34,9 @@ defmodule Tdl.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.8.0-rc.0", override: true},
+      {:phoenix_ecto, "~> 4.5"},
+      {:ecto_sql, "~> 3.10"},
+      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.0"},
@@ -55,9 +58,7 @@ defmodule Tdl.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"},
-      {:ecto_sql, "~> 3.12"},
-      {:postgrex, "~> 0.20"}
+      {:bandit, "~> 1.5"}
     ]
   end
 
@@ -69,12 +70,15 @@ defmodule Tdl.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind tdl", "esbuild tdl"],
+      "assets.build": ["tailwind hello", "esbuild hello"],
       "assets.deploy": [
-        "tailwind tdl --minify",
-        "esbuild tdl --minify",
+        "tailwind hello --minify",
+        "esbuild hello --minify",
         "phx.digest"
       ]
     ]
