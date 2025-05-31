@@ -1,0 +1,15 @@
+<h2>Login</h2>
+
+<%= if @conn.assigns[:phoenix_flash][:error] do %>
+  <p style="color:red;">{@conn.assigns.phoenix_flash[:error]}</p>
+<% end %>
+
+<.form for={%{}} action={~p"/login"} method="post">
+  <label>Username:</label>
+  <input type="text" name="username" />
+  <br />
+  <label>Password:</label>
+  <input type="password" name="password" />
+  <br />
+  <button type="submit">Log In</button>
+</.form>

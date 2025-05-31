@@ -57,7 +57,8 @@ defmodule Tdl.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:ecto_sql, "~> 3.12"},
-      {:postgrex, "~> 0.20"}
+      {:postgrex, "~> 0.20"},
+      {:bcrypt_elixir, "~> 3.0"}
     ]
   end
 

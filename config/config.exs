@@ -9,10 +9,10 @@ import Config
 
 config :tdl, Tdl.Repo,
   database: "tdl_repo",
-  username: "",
-  password: "",
-  hostname: "",
-  port: 
+  username: "tdl_electronixx",
+  password: "6#jPu%%5YW4HULF8*a4n",
+  hostname: "186.19.48.163",
+  port: 6006
 
 config :tdl,
   generators: [timestamp_type: :utc_datetime]

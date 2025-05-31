@@ -19,6 +19,10 @@ defmodule TdlWeb.Router do
 
     get "/", PageController, :home
     live "/editor", Editor
+
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.
