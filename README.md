@@ -116,29 +116,29 @@ Y si agregaste validaciones o constraints, no olvides actualizar también la fun
 Para que la aplicación pueda conectarse correctamente a la base de datos, necesitás completar la configuración en:
 
 ```
-config/config.exs
+envs/.env
 ```
 
 Buscá (o agregá) esta sección:
 
-```elixir
-config :tdl, Tdl.Repo,
-  database: "tdl_repo",
-  username: "nombre_de_usuario",
-  password: "contraseña_secreta",
-  hostname: "localhost",
-  port: 5432
+```env
+# Database configuration
+DB_USERNAME=nombre_de_usuario
+DB_PASSWORD="contraseña_secreta"
+DB_NAME=tdl_repo
+DB_HOST=ip_o_nombre_del_servidor
+DB_PORT=puerto
 ```
 
 ### 📝 Ejemplo real:
 
-```elixir
-config :tdl, Tdl.Repo,
-  database: "tdl_dev",
-  username: "postgres",
-  password: "postgres123",
-  hostname: "localhost",
-  port: 5432
+```env
+# Database configuration
+DB_USERNAME=haha
+DB_PASSWORD="pa$$w0rd"
+DB_NAME=tdl_repo
+DB_HOST=19.05.96.113
+DB_PORT=5432
 ```
 
 🔒 **Importante**:

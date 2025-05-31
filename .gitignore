@@ -37,3 +37,6 @@ npm-debug.log
 
 # VSCode Extension
 /.elixir_ls/
+
+# Envs
+/envs/.env
