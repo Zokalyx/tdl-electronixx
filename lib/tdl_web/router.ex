@@ -18,7 +18,7 @@ defmodule TdlWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/editor", Editor
+    live "/editor/:id", Editor
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
