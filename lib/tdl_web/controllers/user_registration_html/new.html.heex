@@ -1,0 +1,31 @@
+<div class="min-h-screen flex items-center justify-center bg-white">
+  <div class="w-full max-w-md bg-white shadow-md rounded-lg p-8">
+    <h1 class="text-2xl font-semibold text-center mb-6 text-black">Crear Usuario</h1>
+
+    <.form for={%{}} action={~p"/register"} method="post" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Username</label>
+        <input
+          type="text"
+          name="username"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-black"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-black"
+        />
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Crear
+        </button>
+      </div>
+    </.form>
+  </div>
+</div>
