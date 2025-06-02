@@ -58,7 +58,8 @@ defmodule Tdl.MixProject do
       {:bandit, "~> 1.5"},
       {:ecto_sql, "~> 3.12"},
       {:postgrex, "~> 0.20"},
-      {:dotenvy, "~> 0.6.0"}
+      {:dotenvy, "~> 0.6.0"},
+      {:bcrypt_elixir, "~> 3.0"}
     ]
   end
 
