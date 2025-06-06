@@ -1,5 +1,19 @@
 defmodule Tdl.File do
+  use Ecto.Schema
+  import Ecto.Changeset
   use GenServer
+
+  schema "files" do
+    field :filename, :string
+    field :content, :string
+
+    belongs_to :folder, YourApp.Folder, foreign_key: :parent_folder_id
+    belongs_to :user, YourApp.User
+    belongs_to :permission, YourApp.Permission
+
+    timestamps()
+  end
+
 
   ## Client API
   def start_link(opts) do
