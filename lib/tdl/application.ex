@@ -8,7 +8,6 @@ defmodule Tdl.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Tdl.File, name: Tdl.File},
       TdlWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:tdl, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Tdl.PubSub},
