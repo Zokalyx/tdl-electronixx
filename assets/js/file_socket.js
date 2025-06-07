@@ -55,14 +55,36 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic.
 // Let's assume you have a channel with a topic named `file` and the
-// subtopic is its id - in this case 42:
-let channel = socket.channel("file:42", {})
+// subtopic is its id
+const fileId = window.location.pathname.split("/").pop()
+let channel = socket.channel("file:" + fileId, {})
 let textarea = document.querySelector("#file-textarea")
+let title = document.querySelector("#file-title")
+let markdown_output = document.querySelector("#markdown-output")
+
+const md = markdownit()
+
+function update_markdown_output(content) {
+  const result = md.render(content)
+  markdown_output.innerHTML = result
+}
+
+// Interesting events
 textarea.addEventListener("input", (event) => {
   channel.push("update", { content: event.target.value })
+  update_markdown_output(event.target.value)
 })
 channel.on("update", (payload) => {
   textarea.value = payload.content
+  update_markdown_output(payload.content)
+})
+channel.on("initial_content", (payload) => {
+  textarea.value = payload.content
+  title.textContent = payload.title
+  update_markdown_output(payload.content)
+})
+channel.on("file_not_found", () => {
+  console.error("File not found");
 })
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })

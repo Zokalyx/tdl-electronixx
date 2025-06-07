@@ -3,10 +3,9 @@ defmodule Tdl.Permission do
   import Ecto.Changeset
 
   schema "permissions" do
-    field :permission_type, :string
-    belongs_to :user, YourApp.User
+    field(:permission_type, :string)
+    belongs_to(:user, Tdl.User)
 
     timestamps()
   end
-
 end
