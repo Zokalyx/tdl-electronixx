@@ -4,16 +4,15 @@ defmodule Tdl.File do
   use GenServer
 
   schema "files" do
-    field :filename, :string
-    field :content, :string
+    field(:filename, :string)
+    field(:content, :string)
 
-    belongs_to :folder, YourApp.Folder, foreign_key: :parent_folder_id
-    belongs_to :user, YourApp.User
-    belongs_to :permission, YourApp.Permission
+    belongs_to(:folder, Tdl.Folder, foreign_key: :parent_folder_id)
+    belongs_to(:user, Tdl.User)
+    belongs_to(:permissions, Tdl.Permission)
 
     timestamps()
   end
-
 
   ## Client API
   def start_link(opts) do
