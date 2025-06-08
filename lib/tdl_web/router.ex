@@ -24,6 +24,9 @@ defmodule TdlWeb.Router do
     post "/login", SessionController, :create
     get "/register", UserRegistrationController, :new
     post "/register", UserRegistrationController, :create
+
+    get "/files", FilesController, :index
+    get "/files/:id", FilesController, :folder
   end
 
   # Other scopes may use custom stacks.
