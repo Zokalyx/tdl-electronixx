@@ -1,9 +1,14 @@
-<!-- Layouts.flash_group flash={@flash} /-->
+<div class="min-h-screen bg-white p-8">
+  <h1 class="text-3xl font-bold mb-6 text-center text-black">Archivos</h1>
 
-<section class="text-center py-16 bg-gray-50">
-  <h1 class="text-4xl font-bold text-gray-800 mb-4">
-      Mis archivos. Aca vas a encontrar los archivos.
-  </h1>
-  <p> Aca va a estar un home con mis archivos y los archivos compartidos conmigo.</p>
-
-</section>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <%= for file <- @files do %>
+      <.link navigate={~p"/editor/#{file.id}"} class="block bg-gray-100 hover:bg-gray-200 p-4 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-2 text-black"><%= file.filename %></h2>
+        <p class="text-sm text-gray-700">
+          <%= String.slice(file.content || "", 0, 100) %><%= if String.length(file.content || "") > 100, do: "..." %>
+        </p>
+      </.link>
+    <% end %>
+  </div>
+</div>

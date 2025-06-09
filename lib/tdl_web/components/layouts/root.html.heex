@@ -35,8 +35,13 @@
     <nav class="space-x-4">
       <.link navigate="/files" class="text-gray-700 hover:text-blue-600">Files</.link>
       <.link navigate="/editor" class="text-gray-700 hover:text-blue-600">Editor</.link>
-      <.link navigate="/login" class="text-gray-700 hover:text-blue-600">Sign In</.link>
-      <.link navigate="/register" class="text-gray-700 hover:text-blue-600">Sign Up</.link>
+      
+      <%= if @current_user do %>
+        <.link navigate="/logout" class="text-gray-700 hover:text-blue-600">Log Out</.link>
+      <% else %>
+        <.link navigate="/login" class="text-gray-700 hover:text-blue-600">Sign In</.link>
+        <.link navigate="/register" class="text-gray-700 hover:text-blue-600">Sign Up</.link>
+      <% end %>
     </nav>
   </div>
 </header>
