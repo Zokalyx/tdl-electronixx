@@ -2,6 +2,7 @@ defmodule TdlWeb.FileChannel do
   use Phoenix.Channel
 
   def join("file:" <> id, _params, socket) do
+    send(self(), :after_join)
     {:ok, assign(socket, :id, id)}
   end
 
