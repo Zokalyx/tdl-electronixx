@@ -8,6 +8,7 @@ defmodule TdlWeb.Router do
     plug :put_root_layout, html: {TdlWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug TdlWeb.Plugs.Auth
   end
 
   pipeline :api do
