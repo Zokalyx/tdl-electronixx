@@ -12,7 +12,7 @@ defmodule TdlWeb.SessionController do
         conn
         |> put_session(:user_id, user.id)
         |> put_flash(:info, "Logged in successfully.")
-        |> redirect(to: "/")
+        |> redirect(to: "/files")
 
       {:error, _} ->
         conn
