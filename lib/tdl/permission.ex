@@ -13,6 +13,6 @@ defmodule Tdl.Permission do
     permission
     |> cast(attrs, [:permission_type, :user_id])
     |> validate_required([:permission_type, :user_id])
-    |> validate_inclusion(:permission_type, ["Read", "Write", "Admin"])
+    |> validate_inclusion(:permission_type, ["Read", "Write"])
   end
 end

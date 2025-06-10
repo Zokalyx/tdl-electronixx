@@ -41,6 +41,5 @@ defmodule Tdl.File do
     file
     |> cast(attrs, [:filename, :content, :user_id, :parent_folder_id, :permissions_id])
     |> validate_required([:filename, :user_id])
-    |> validate_length(:filename, min: 1, max: 255)
   end
 end
