@@ -1,6 +1,38 @@
 <div class="min-h-screen bg-white p-8">
   <h1 class="text-3xl font-bold mb-6 text-center text-black">Archivos</h1>
 
+  <!-- New file button -->
+  <div class="mb-4">
+    <button id="new-file-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      + Nuevo archivo
+    </button>
+  </div>
+
+  <!-- New file modal -->
+  <div id="new-file-modal" class="fixed inset-0 backdrop-blur-sm bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-semibold mb-4">Crear nuevo archivo</h2>
+        <form id="new-file-form" action="/files" method="post">
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+          <div class="mb-4">
+            <label for="filename" class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
+            <input type="text" id="filename" name="file[filename]" class="w-full border border-gray-300 p-2 rounded-md" required />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="button" id="cancel-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-100">
+              Cancelar
+            </button>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+              Crear
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- File cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <%= for file <- @files do %>
       <.link navigate={~p"/editor/#{file.id}"} class="block bg-gray-100 hover:bg-gray-200 p-4 rounded-lg shadow-md">
@@ -12,3 +44,39 @@
     <% end %>
   </div>
 </div>
+
+<!-- Script for new file modal -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('new-file-modal');
+    const newFileBtn = document.getElementById('new-file-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const filenameInput = document.getElementById('filename');
+
+    newFileBtn.addEventListener('click', function() {
+      modal.classList.remove('hidden');
+      filenameInput.focus();
+    });
+
+    cancelBtn.addEventListener('click', function() {
+      modal.classList.add('hidden');
+      filenameInput.value = '';
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        filenameInput.value = '';
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+        filenameInput.value = '';
+      }
+    });
+  });
+</script>

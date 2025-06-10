@@ -19,6 +19,19 @@ defmodule TdlWeb.FilesController do
     render(conn, :files, files: files)
   end
 
+  def create(conn, %{"file" => %{"filename" => filename}}) do
+    user_id = conn.assigns.current_user.id
+    
+    case Tdl.Files.create_file(%{"filename" => filename, "content" => "", "user_id" => user_id}) do
+      {:ok, file} ->
+        redirect(conn, to: ~p"/editor/#{file.id}")
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Error creating file")
+        |> redirect(to: ~p"/files")
+    end
+  end
+
   def folder(conn, %{"id" => folder_id}) do
     message = "Aca se abre la carpeta #{folder_id}"
     text(conn, message)

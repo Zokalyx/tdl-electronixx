@@ -29,6 +29,7 @@ defmodule TdlWeb.Router do
 
     get "/files", FilesController, :index
     get "/files/:id", FilesController, :folder
+    post "/files", FilesController, :create
   end
 
   # Other scopes may use custom stacks.
