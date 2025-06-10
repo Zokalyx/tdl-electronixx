@@ -9,8 +9,7 @@ defmodule TdlWeb.FilesController do
 
     files_query =
       from(f in Tdl.File,
-        join: p in assoc(f, :permissions),
-        where: p.user_id == ^current_user.id,
+        where: f.user_id == ^current_user.id,
         select: f
       )
 
