@@ -21,10 +21,11 @@ defmodule TdlWeb.Router do
     get "/", PageController, :home
     live "/editor/:id", Editor
 
-    get "/login", SessionController, :new
-    post "/login", SessionController, :create
     get "/register", UserRegistrationController, :new
     post "/register", UserRegistrationController, :create
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
 
     get "/files", FilesController, :index
     get "/files/:id", FilesController, :folder
