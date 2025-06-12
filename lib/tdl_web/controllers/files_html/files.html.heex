@@ -1,11 +1,63 @@
 <div class="min-h-screen bg-white p-8">
-  <h1 class="text-3xl font-bold mb-6 text-center text-black">Archivos</h1>
+  
+  <h1 class="text-3xl font-bold mb-6 text-center text-black">
+    Archivos
+  </h1>
+  <h2 class="text-2xl font-bold mb-6 text-center text-black">
+    <%= if @folder do %>
+      Carpeta actual: <%= @folder.foldername %>
+    <% else %>
+      Carpeta actual: Root
+    <% end %>
+  </h2>
 
-  <!-- New file button -->
   <div class="mb-4">
+    <%= if @folder do %>
+      <%= if @folder.parent_folder_id do %>
+        <.link navigate={~p"/files/#{@folder.parent_folder_id}"} class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 mr-2">
+          ← Volver
+        </.link>
+      <% else %>
+        <.link navigate={~p"/files"} class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 mr-2">
+          ← Volver
+        </.link>
+      <% end %>
+    <% end %>
+    
+    <!-- New folder button -->
+    <button id="new-folder-btn" class="ml-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      + Nueva carpeta
+    </button>
+    
+    <!-- New file button -->
     <button id="new-file-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
       + Nuevo archivo
     </button>
+  </div>
+
+  <!-- New folder modal -->
+  <div id="new-folder-modal" class="fixed inset-0 backdrop-blur-sm bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-semibold mb-4">Crear nueva carpeta</h2>
+        <form id="new-folder-form" action="/folders" method="post">
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+          <input type="hidden" name="folder[parent_folder_id]" value={@folder && @folder.id} />
+          <div class="mb-4">
+            <label for="foldername" class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
+            <input type="text" id="foldername" name="folder[foldername]" class="w-full border border-gray-300 p-2 rounded-md" required />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="button" id="cancel-folder-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-100">
+              Cancelar
+            </button>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+              Crear
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <!-- New file modal -->
@@ -15,6 +67,7 @@
         <h2 class="text-xl font-semibold mb-4">Crear nuevo archivo</h2>
         <form id="new-file-form" action="/files" method="post">
           <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+          <input type="hidden" name="file[parent_folder_id]" value={@folder && @folder.id} />
           <div class="mb-4">
             <label for="filename" class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
             <input type="text" id="filename" name="file[filename]" class="w-full border border-gray-300 p-2 rounded-md" required />
@@ -32,11 +85,24 @@
     </div>
   </div>
 
+  <!-- Folder cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <%= for folder <- @subfolders do %>
+      <.link navigate={~p"/files/#{folder.id}"} class="block bg-green-100 hover:bg-green-200 p-4 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-2 text-black">
+          📁 <%= folder.foldername %>
+        </h2>
+      </.link>
+    <% end %>
+  </div>
+
   <!-- File cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <%= for file <- @files do %>
-      <.link navigate={~p"/editor/#{file.id}"} class="block bg-gray-100 hover:bg-gray-200 p-4 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold mb-2 text-black"><%= file.filename %></h2>
+      <.link navigate={~p"/editor/#{file.id}"} class="block bg-blue-100 hover:bg-blue-200 p-4 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-2 text-black">
+          📄 <%= file.filename %>
+        </h2>
         <p class="text-sm text-gray-700">
           <%= String.slice(file.content || "", 0, 100) %><%= if String.length(file.content || "") > 100, do: "..." %>
         </p>
@@ -45,7 +111,7 @@
   </div>
 </div>
 
-<!-- Script for new file modal -->
+<!-- Script for new file and new folder modals -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('new-file-modal');
@@ -76,6 +142,35 @@
       if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
         modal.classList.add('hidden');
         filenameInput.value = '';
+      }
+    });
+
+    const folderModal = document.getElementById('new-folder-modal');
+    const newFolderBtn = document.getElementById('new-folder-btn');
+    const cancelFolderBtn = document.getElementById('cancel-folder-btn');
+    const foldernameInput = document.getElementById('foldername');
+
+    newFolderBtn.addEventListener('click', function() {
+      folderModal.classList.remove('hidden');
+      foldernameInput.focus();
+    });
+
+    cancelFolderBtn.addEventListener('click', function() {
+      folderModal.classList.add('hidden');
+      foldernameInput.value = '';
+    });
+
+    folderModal.addEventListener('click', function(e) {
+      if (e.target === folderModal) {
+        folderModal.classList.add('hidden');
+        foldernameInput.value = '';
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !folderModal.classList.contains('hidden')) {
+        folderModal.classList.add('hidden');
+        foldernameInput.value = '';
       }
     });
   });

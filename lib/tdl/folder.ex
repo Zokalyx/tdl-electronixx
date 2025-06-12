@@ -8,8 +8,14 @@ defmodule Tdl.Folder do
     belongs_to(:permissions, Tdl.Permission)
 
     has_many(:subfolders, __MODULE__, foreign_key: :parent_folder_id)
-    has_many(:files, Tdl.File)
+    has_many(:files, Tdl.File, foreign_key: :parent_folder_id)
 
     timestamps()
+  end
+
+  def changeset(folder, attrs) do
+    folder
+    |> cast(attrs, [:foldername, :parent_folder_id])
+    |> validate_required([:foldername])
   end
 end
