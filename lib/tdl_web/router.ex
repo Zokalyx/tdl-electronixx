@@ -28,8 +28,10 @@ defmodule TdlWeb.Router do
     delete "/logout", SessionController, :delete
 
     get "/files", FilesController, :index
-    get "/files/:id", FilesController, :folder
-    post "/files", FilesController, :create
+    get "/files/:folder_id", FilesController, :index
+    post "/files", FilesController, :create_file
+
+    post "/folders", FilesController, :create_folder
   end
 
   # Other scopes may use custom stacks.
