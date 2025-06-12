@@ -33,11 +33,10 @@
       TDL 2025
     </div>
     <nav class="space-x-4">
-      <.link navigate="/files" class="text-gray-700 hover:text-blue-600">Files</.link>
-      <.link navigate="/editor" class="text-gray-700 hover:text-blue-600">Editor</.link>
-      
       <%= if @current_user do %>
-        <.link navigate="/logout" class="text-gray-700 hover:text-blue-600">Log Out</.link>
+        <.link navigate="/files" class="text-gray-700 hover:text-blue-600">Archivos</.link>
+        <.link navigate="/editor" class="text-gray-700 hover:text-blue-600">Editor</.link>
+        <.link href="/logout" method="delete" class="text-gray-700 hover:text-blue-600">Log Out</.link>
       <% else %>
         <.link navigate="/login" class="text-gray-700 hover:text-blue-600">Sign In</.link>
         <.link navigate="/register" class="text-gray-700 hover:text-blue-600">Sign Up</.link>

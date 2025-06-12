@@ -8,4 +8,11 @@ defmodule Tdl.Permission do
 
     timestamps()
   end
+
+  def changeset(permission, attrs) do
+    permission
+    |> cast(attrs, [:permission_type, :user_id])
+    |> validate_required([:permission_type, :user_id])
+    |> validate_inclusion(:permission_type, ["Read", "Write"])
+  end
 end
