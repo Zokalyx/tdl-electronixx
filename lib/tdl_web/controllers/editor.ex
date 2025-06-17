@@ -5,10 +5,10 @@ defmodule TdlWeb.Editor do
 
   def render(assigns) do
     ~H"""
-    <section class="text-black max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 id="file-title">{@file.filename}</h1>
+    <section class="text-black w-full p-6 bg-white shadow-md rounded-lg">
+      <h1 id="file-title" class="text-3xl font-bold mb-6 text-center">{@file.filename}</h1>
 
-      <div class="flex gap-4">
+      <div class="flex gap-4 w-full">
         <textarea
           id="file-textarea"
           name="text"
