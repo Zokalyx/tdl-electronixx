@@ -5,31 +5,65 @@ defmodule TdlWeb.Editor do
 
   def render(assigns) do
     ~H"""
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js">
-    </script>
-    <section class="text-black max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <!--input
-        type="text"
-        name="title"
-        class="p-3 mb-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        placeholder="Title"
-      /> <span class="text-black">.md</span-->
-      <h1 id="file-title">{@file.filename}</h1>
+    <section class="text-black w-full p-6 bg-white shadow-md rounded-lg">
+      <h1 id="file-title" class="text-3xl font-bold mb-6 text-center">{@file.filename}</h1>
 
-      <div class="flex gap-4">
+      <div class="flex gap-4 w-full">
         <textarea
           id="file-textarea"
-          id="text"
           name="text"
           rows="10"
           class="font-mono text-black w-1/2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
-          placeholder=""
         ><%= @file.content %></textarea>
 
-        <div id="markdown-output" class="w-1/2 mt-0 p-3 border border-gray-300 rounded-md bg-gray-50">
+        <div
+          id="markdown-output"
+          class="w-1/2 mt-0 p-3 border border-gray-300 rounded-md markdown-body"
+        >
         </div>
       </div>
     </section>
+
+    <!-- markdown-it -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js">
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css"
+    />
+    <style>
+      /* Overwrite app.css for bullet points and numbered lists */
+      .markdown-body ul {
+        list-style-type: disc !important; /* Forces bullet points */
+      }
+      .markdown-body ol {
+        list-style-type: decimal !important; /* Forces numbered lists */
+      }
+      .markdown-body ul, .markdown-body ol {
+        margin-left: 2em !important; /* Adjust indentation as needed */
+        padding-left: 0 !important; /* github-markdown-css handles this, but good to be explicit if still issues */
+      }
+      .markdown-body ul ul { list-style-type: circle !important; }
+      .markdown-body ul ul ul { list-style-type: square !important; }
+      .markdown-body ol ol { list-style-type: lower-alpha !important; }
+      .markdown-body ol ol ol { list-style-type: lower-roman !important; }
+    </style>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const textarea = document.getElementById("file-textarea");
+        const output = document.getElementById("markdown-output");
+        const md = window.markdownit();
+
+        function updatePreview() {
+          output.innerHTML = md.render(textarea.value);
+        }
+
+        textarea.addEventListener("input", updatePreview);
+        updatePreview(); // Initial render
+      });
+    </script>
     """
   end
 
