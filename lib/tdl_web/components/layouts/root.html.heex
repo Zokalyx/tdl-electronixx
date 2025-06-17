@@ -4,12 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="Tdl" suffix=" · Phoenix Framework">
+
+    <.live_title suffix=" · Phoenix Framework" default="Tdl">
       {assigns[:page_title]}
     </.live_title>
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
-    </script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}></script>
+
     <script>
       (() => {
         const setTheme = (theme) => {
@@ -27,30 +29,34 @@
       })();
     </script>
   </head>
-  <header class="bg-white shadow-md">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <div class="text-2xl font-bold text-blue-600">
-      TDL 2025
-    </div>
-    <nav class="space-x-4">
-      <%= if @current_user do %>
-        <.link navigate="/files" class="text-gray-700 hover:text-blue-600">Archivos</.link>
-        <.link navigate="/editor" class="text-gray-700 hover:text-blue-600">Editor</.link>
-        <.link href="/logout" method="delete" class="text-gray-700 hover:text-blue-600">Log Out</.link>
-      <% else %>
-        <.link navigate="/login" class="text-gray-700 hover:text-blue-600">Sign In</.link>
-        <.link navigate="/register" class="text-gray-700 hover:text-blue-600">Sign Up</.link>
-      <% end %>
-    </nav>
-  </div>
-</header>
-  <body>
-   <%= @inner_content %>
+
+  <body class="bg-white">
+    <header class="bg-white shadow-md">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold text-blue-600">
+          TDL 2025
+        </div>
+        <nav class="space-x-4">
+          <%= if @current_user do %>
+            <.link navigate="/files" class="text-gray-700 hover:text-blue-600">Archivos</.link>
+            <.link navigate="/editor" class="text-gray-700 hover:text-blue-600">Editor</.link>
+            <.link href="/logout" method="delete" class="text-gray-700 hover:text-blue-600">Log Out</.link>
+          <% else %>
+            <.link navigate="/login" class="text-gray-700 hover:text-blue-600">Sign In</.link>
+            <.link navigate="/register" class="text-gray-700 hover:text-blue-600">Sign Up</.link>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="min-h-screen">
+      <%= @inner_content %>
+    </main>
+
+    <footer class="bg-gray-100 mt-16 py-6">
+      <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
+        © 2025 Grupo Electronixx – All rights reserved.
+      </div>
+    </footer>
   </body>
-  <!-- Footer -->
-<footer class="bg-gray-100 mt-16 py-6">
-  <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
-    © 2025 Grupo Electronixx – All rights reserved.
-  </div>
-</footer>
 </html>
