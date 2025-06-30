@@ -45,7 +45,7 @@
           <input type="hidden" name="folder[parent_folder_id]" value={@folder && @folder.id} />
           <div class="mb-4">
             <label for="foldername" class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
-            <input type="text" id="foldername" name="folder[foldername]" class="w-full border border-gray-300 p-2 rounded-md" required />
+            <input type="text" id="foldername" name="folder[foldername]" class="w-full border border-gray-300 p-2 rounded-md text-black" required />
           </div>
           <div class="flex justify-end space-x-2">
             <button type="button" id="cancel-folder-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-100">
@@ -70,7 +70,7 @@
           <input type="hidden" name="file[parent_folder_id]" value={@folder && @folder.id} />
           <div class="mb-4">
             <label for="filename" class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>
-            <input type="text" id="filename" name="file[filename]" class="w-full border border-gray-300 p-2 rounded-md" required />
+            <input type="text" id="filename" name="file[filename]" class="w-full border border-gray-300 p-2 rounded-md text-black" required />
           </div>
           <div class="flex justify-end space-x-2">
             <button type="button" id="cancel-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-100">
